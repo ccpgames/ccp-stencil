@@ -5,13 +5,14 @@ __all__ = [
 from ccpstencil.structs import *
 from alviss import quickloader
 from ccptools.tpu import iters
+from pathlib import Path
 import logging
 log = logging.getLogger(__file__)
 
 
 class AlvissContext(IContext):
-    def __init__(self, file_name: str, **kwargs):
-        self._file_name = file_name
+    def __init__(self, file_name: Union[str, Path], **kwargs):
+        self._file_name = str(file_name)
         self._data = quickloader.autoload(file_name)
         self._update_map: Dict[Tuple[str], Any] = {}
 

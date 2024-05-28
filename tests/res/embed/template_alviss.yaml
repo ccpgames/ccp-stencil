@@ -1,0 +1,15 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{app.slug}}-file-configmap
+  namespace: {{app.namespace}}
+  labels:
+    version: {{app.version}}
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+  alviss_embed.yaml: |-
+    {% embed 'alviss_embed.yaml', indent=4, alviss=True %}
+some:
+  key:
+    in:
+      the: "end"

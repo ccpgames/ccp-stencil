@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{app.slug}}-file-configmap
+  namespace: {{app.namespace}}
+  labels:
+    version: {{app.version}}
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+  file_to_embed.json: |-
+    {% embed 'file_to_embed.json', indent=4 %}
+  another_embedded_file.py: |-
+    {% embed 'another_embedded_file.py', indent=4 %}
+some:
+  key:
+    in:
+      the: "end"

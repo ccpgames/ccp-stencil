@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{app.slug}}-secrets
+  namespace: {{app.namespace}}
+  labels:
+    version: {{app.version}}
+type: Opaque
+data:
+  {% for k, v in app.secrets.items() %}
+  {{k}}: "{{v|base64}}"
+  {% endfor %}

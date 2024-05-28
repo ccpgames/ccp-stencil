@@ -1,0 +1,16 @@
+app:
+  slug: foo
+  namespace: bar-test
+  version: 1.2.3-beta.4
+
+  conf:
+    file: file_to_embed.json
+    other_file: another_embedded_file.py
+
+  multi_conf:
+    - file_to_embed.json
+    - another_embedded_file.py
+
+  secrets:
+    this_is_confidential: "Its a secret to EVERYBODY!"
+    DB_PASSWORD: "Really Bad Password!"
