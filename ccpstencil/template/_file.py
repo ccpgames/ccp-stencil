@@ -5,19 +5,30 @@ __all__ = [
 from ccpstencil.structs import *
 from pathlib import Path
 
-from ._string import *
+from ._base import *
 
 
-class FileTemplate(StringTemplate):
-    def __init__(self, file_path: Union[str, Path], **kwargs):
-        if isinstance(file_path, str):
-            file_path = Path(file_path)
-        self._file_path: Path = file_path
-        super().__init__(template_string=self._read_file(), **kwargs)
+class FileTemplate(_BaseTemplate):
+    def __init__(self, file_path: T_PATH, **kwargs):
+        super().__init__(**kwargs)
+        self._file_path: T_PATH = file_path
 
     def _read_file(self) -> str:
-        if not self._file_path.exists():
-            raise TemplateNotFoundError(f'File {self._file_path} does not exist')
+        if isinstance(self._file_path, str):
+            as_path = Path(self._file_path)
+        else:
+            as_path = self._file_path
+        if not as_path.exists():
+            raise TemplateNotFoundError(f'File {as_path} does not exist')
 
-        with open(self._file_path, 'r') as fin:
+        with open(as_path, 'r') as fin:
             return fin.read()
+
+    def get_jinja_template(self) -> jinja2.Template:
+        if isinstance(self._file_path, str):
+            try:
+                return self.renderer.jinja_environment.get_template(self._file_path)
+            except jinja2.exceptions.TemplateNotFound:
+                pass
+        template_string = self._read_file()
+        return self.renderer.jinja_environment.from_string(template_string)

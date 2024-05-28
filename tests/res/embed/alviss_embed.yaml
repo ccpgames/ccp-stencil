@@ -1,0 +1,11 @@
+app:
+  module: foo
+  class_name: ${app.module}.Bar
+config:
+  coolness_enabled: True
+  person:
+    __include__: inc/include_file.yaml
+  something:
+    else: Yubbi!
+  environment:
+    value: ${__ENV__:ENVIRONMENT_VARIABLE_FORTY_TWO}

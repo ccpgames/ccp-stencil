@@ -1,0 +1,27 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: foo-file-configmap
+  namespace: bar-test
+  labels:
+    version: 1.2.3-beta.4
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+  file_to_embed.json: |-
+    {
+        "this": "is",
+        "a": "json file"
+    }
+  another_embedded_file.py: |-
+    
+    def main():
+        print("Hello World!")
+    
+    
+    if __name__ == '__main__':
+        main()
+
+some:
+  key:
+    in:
+      the: "end"

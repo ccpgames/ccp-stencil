@@ -1,0 +1,28 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: foo-file-configmap
+  namespace: bar-test
+  labels:
+    version: 1.2.3-beta.4
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+  alviss_embed.yaml: |-
+    app:
+      class_name: foo.Bar
+      module: foo
+    config:
+      coolness_enabled: true
+      environment:
+        value: '42'
+      person:
+        color: green
+        job: Alien
+        name: Bob
+      something:
+        else: Yubbi!
+
+some:
+  key:
+    in:
+      the: "end"

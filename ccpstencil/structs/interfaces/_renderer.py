@@ -40,3 +40,11 @@ class IRenderer(abc.ABC):
     @abc.abstractmethod
     def jinja_environment(self) -> jinja2.Environment:
         pass
+
+    @abc.abstractmethod
+    def is_template_loadable(self, template_name: str) -> bool:
+        pass
+
+    @abc.abstractmethod
+    def get_embed(self, file_path: str, source_file: Optional[str] = None, alviss: bool = False, env: bool = False) -> str:
+        pass
