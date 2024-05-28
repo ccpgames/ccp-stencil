@@ -20,9 +20,13 @@ def guess_template_by_argument(template: T_PATH, renderer: Optional[IRenderer] =
     if renderer and isinstance(template, str):
         if renderer.is_template_loadable(template):
             return FileTemplate(file_path=template)
-    as_path = Path(template)
-    if as_path.exists():
-        return FileTemplate(file_path=template)
+    try:
+        as_path = Path(template)
+        if as_path.exists():
+            return FileTemplate(file_path=template)
+    except (OSError, ValueError, FileNotFoundError, TypeError, NotImplementedError):
+        pass  # All of these are likely if this wasn't actually a proper path!
+
     return StringTemplate(template_string=template)
 
 

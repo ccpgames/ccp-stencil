@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2024-05-28
+
+### Fixed
+
+- A bug in the `guess_template_by_argument` method that raised exceptions while 
+  checking to see if a given string could be interpreted as a path to an 
+  existing file (which should be allowed to fail silently and then the string 
+  returned as a `StringTemplate`)
+
 
 ## [0.2.0] - 2024-05-28
 
@@ -32,6 +41,25 @@ Embedding Extension & Base64 Filter update
   variables as base64 encoded strings
   - The main use case here was considered things like rendering of Kubernetes 
     Secret manifests where keys need to be base64 encoded  
+- A "shortcut" method called `render_stencil` for quicly rendering to `str` (via
+  the `StringRenderer`) in code that takes two simple kwargs called `template` 
+  and `context` and will use the appropriate Template and Context 
+  implementations based on the type and/or value of those arguments (see below)
+- Two utility functions that attempt to instantiate the appropriate Template and 
+  Context types based on the argument types supplied as `template` and 
+  `context`:
+  - A template that is an instance of `pathlib.Path` will be a `FileTemplate`
+  - A template that is a multi-line `str` will be a `StringTemplate`
+  - A template that is a single-line `str` will:
+    - First attempt to see if it refers to a template name that Jinja2 can load, 
+      and return a `FileTemplate` if so
+    - Then it'll see if the string can be interpreted as a file system path to a 
+      file that exists, and then return a `FileTemplate`
+    - If all that fails, it'll just assume the `str` is the template itself and 
+      return a `StringTemplate`
+  - A context that is an instance of `pathlib.Path` or a `str` will be an 
+    `AlvissContext`
+  - A context that is a `dict` will be a `DictContext`
 - A bunch of "proper" unittests for the new embedding and filter functions
 
 ### Changed
@@ -41,6 +69,10 @@ Embedding Extension & Base64 Filter update
   as well as the root directory of the script being executed (`sys.argv[0]`) 
   plus whatever paths are defined in the `STENCIL_TEMPLATE_PATH` environment 
   variable, if any (multiple paths seperated by `;`)
+  - This change enables and vastly simplifies using the Jinaj2 built in 
+    expressions like `{% extends ... %}` and `{% include ... %}` "out of the 
+    box" so to speak as well as making custom `{% marcro ... %}` files to 
+    include.
 
 
 ## [0.1.0] - 2024-05-24
