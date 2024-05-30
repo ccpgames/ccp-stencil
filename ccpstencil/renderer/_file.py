@@ -22,7 +22,7 @@ class FileRenderer(StringRenderer):
         return super().render()
 
     def _output_rendered_results(self, rendered_string: str) -> str:
-        results = super().render()
+        results = self._render_as_string()
         if results is None:
             return f'Skipped: {self._output_file.absolute()}'
 
