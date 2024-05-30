@@ -1,5 +1,4 @@
 {% setfilename %}
-{{name}}_file.txt asd kasd
-a dnlkjn .a?!289h$
+{{colors.favorite}}_file.txt
 {% endsetfilename %}
-My name is {{name}} and I am {{age}} years old and my favorite color is NOT {{color}}
+My name is {{name}} and I am {{age}} years old and my favorite color is NOT {{colors.weakness}}

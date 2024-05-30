@@ -5,6 +5,8 @@ __all__ = [
 from ccpstencil.structs import *
 from pathlib import Path
 from ._string import *
+import logging
+log = logging.getLogger(__file__)
 
 
 class FileRenderer(StringRenderer):
@@ -12,15 +14,23 @@ class FileRenderer(StringRenderer):
                  context: Optional[IContext] = None, template: Optional[ITemplate] = None,
                  overwrite: bool = True,
                  **kwargs):
-        if isinstance(output_path, str):
-            output_path = Path(output_path)
-        self._output_path: Path = output_path
-        if not self._output_path.is_dir():
-            self.output_file_name = self._output_path.name
-            self._output_path = self._output_path.parent
-
         self._overwrite = overwrite
         super().__init__(context, template, **kwargs)
+        is_dir = False
+        log.debug(f'{output_path=}')
+        if isinstance(output_path, str):
+            if output_path.endswith('\\') or output_path.endswith('/'):
+                is_dir = True
+            output_path = Path(output_path)
+
+        if not is_dir:
+            self.output_file_name = str(output_path.name)
+            self._output_path = output_path.parent
+        else:
+            self._output_path = output_path
+
+        log.debug(f'{self._output_path=}')
+        log.debug(f'{self.output_file_name=}')
 
     def render(self) -> str:
         return super().render()

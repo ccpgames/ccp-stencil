@@ -34,7 +34,9 @@ class StencilRunner:
         rnd = self.get_renderer()
         rnd.template = self.get_template()
         rnd.context = self.get_context()
-        rnd.render()
+        res = rnd.render()
+        if self.output:
+            print(f'Wrote file: {res}')
 
     def get_template(self) -> ITemplate:
         if self.template:
