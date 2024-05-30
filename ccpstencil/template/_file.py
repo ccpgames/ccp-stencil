@@ -13,6 +13,10 @@ class FileTemplate(_BaseTemplate):
         super().__init__(**kwargs)
         self._file_path: T_PATH = file_path
 
+    @property
+    def file_name(self) -> str:
+        return str(self.get_file_path().name)
+
     def _read_file(self) -> str:
         as_path = self.get_file_path()
 

@@ -3,7 +3,7 @@ __all__ = [
 ]
 import os
 import sys
-from ccptools.structs import *
+from ccpstencil.structs import *
 from ccpstencil.stencils import *
 import logging
 log = logging.getLogger(__file__)
@@ -15,12 +15,14 @@ class StencilRunner:
 
         self.template: Optional[str] = None
         self.string_template: Optional[str] = None
+        self.directory_template: Optional[str] = None
 
         self.input: Optional[str] = None
         self.additional_arg_list: List[str] = []
 
         self.output: Optional[str] = None
         self.no_overwrite: bool = False
+        self.no_purge: bool = False
 
     def _make_cwd_importable(self):
         cwd = os.getcwd()
@@ -36,10 +38,16 @@ class StencilRunner:
         rnd.context = self.get_context()
         res = rnd.render()
         if self.output:
-            print(f'Wrote file: {res}')
+            if isinstance(res, List):
+                for f in res:
+                    print(f'Wrote file: {f}')
+            else:
+                print(f'Wrote file: {res}')
 
     def get_template(self) -> ITemplate:
-        if self.template:
+        if self.directory_template:
+            return DirectoryTemplate(self.directory_template)
+        elif self.template:
             return FileTemplate(self.template)
         else:
             return StringTemplate(self.string_template)
@@ -60,7 +68,13 @@ class StencilRunner:
         return ctx
 
     def get_renderer(self) -> IRenderer:
-        if self.output:
+        if self.directory_template:
+            if not self.output:
+                raise RenderError('Must specify output directory for directory rendering')
+            return DirectoryRenderer(output_path=self.output,
+                                     overwrite=not self.no_overwrite,
+                                     purge=not self.no_purge)
+        elif self.output:
             return FileRenderer(self.output,
                                 overwrite=not self.no_overwrite)
         else:
