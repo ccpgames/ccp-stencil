@@ -1,0 +1,10 @@
+mode:
+  normal:
+    adjective: Now
+  positive:
+    enabled: true
+    adjective: Shiny
+  negative:
+    enabled: false
+    adjective: Shitty
+number: 7
