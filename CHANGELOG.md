@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2024-05-30
+
+### Added
+
+- New Extension that adds a `{% skip_if %}` tag where you can insert any 
+  condition (e.g. checking the Context) and if it evals as True, a 
+  `CancelRendering` exception is raised and caught by the Renderers causing 
+  them to silently just skip rendering that template.
+  - The `StringRenderer` returns `None`
+  - The `StoutRenderer` prints out nothing
+  - The `FileRenderer` doesn't create an output file
+- Added unittests for the `{% skip_if %}` tag
+
+
 ## [0.3.0] - 2024-05-28
 
 ### Fixed

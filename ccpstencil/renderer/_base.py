@@ -125,13 +125,22 @@ class _BaseRenderer(IRenderer, abc.ABC):
         value.set_renderer(self)
         self._template = value
 
-    @abc.abstractmethod
     def render(self):
-        """This should just be called by subclasses via super().render() in
-        order to run preflight and common stuff, but the empty return value
-        should be ignored.
-        """
         self._pre_flight()
+        try:
+            rendered_string = self._render_as_string()
+            return self._output_rendered_results(rendered_string)
+        except CancelRendering:
+            log.info(f'Rendering cancelled by skip_if tag')
+            return None
+
+    @abc.abstractmethod
+    def _output_rendered_results(self, rendered_string: str):
+        pass
+
+    @abc.abstractmethod
+    def _render_as_string(self) -> str:
+        pass
 
     @property
     def jinja_environment(self) -> jinja2.Environment:
