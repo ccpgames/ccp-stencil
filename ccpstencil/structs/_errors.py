@@ -11,6 +11,7 @@ __all__ = [
     'InvalidContextTypeForRendererError',
     'InvalidTemplateTypeForRendererError',
     'OutputFileExistsError',
+    'NoOutputFileNameError',
     'EmbedFileNotFound',
 
     'CancelRendering',
@@ -50,6 +51,10 @@ class InvalidTemplateTypeForRendererError(RenderError, TypeError):
 
 
 class OutputFileExistsError(RenderError, FileExistsError):
+    pass
+
+
+class NoOutputFileNameError(RenderError, ValueError):
     pass
 
 

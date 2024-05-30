@@ -17,7 +17,8 @@ def main():
 
     parser.add_argument('-a', '--arg', action='append', help='Add additional Context arguments from the command line, e.g. -a foo=bar')
 
-    parser.add_argument('-o', '--output', help='File to write the results to (otherwise its just printed to stdout)',
+    parser.add_argument('-o', '--output', help='Path or file to write the results to (otherwise its just printed to stdout).'
+                                               ' If this is only a path, the name of the rendered file will be the same as the input template.',
                               default='', nargs='?')
     parser.add_argument('--no-overwrite', action="store_true", help='Makes sore existing output files are not overwritten')
 

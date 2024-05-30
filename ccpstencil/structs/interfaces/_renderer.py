@@ -48,3 +48,13 @@ class IRenderer(abc.ABC):
     @abc.abstractmethod
     def get_embed(self, file_path: str, source_file: Optional[str] = None, alviss: bool = False, env: bool = False) -> str:
         pass
+
+    @property
+    @abc.abstractmethod
+    def output_file_name(self) -> str:
+        pass
+
+    @output_file_name.setter
+    @abc.abstractmethod
+    def output_file_name(self, value: str):
+        pass

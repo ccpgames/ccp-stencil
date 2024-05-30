@@ -2,10 +2,10 @@ __all__ = [
     'EmbedExtension',
 ]
 
-import os
-from jinja2 import nodes, TemplateSyntaxError
+from jinja2 import nodes
 from jinja2.ext import Extension
-from ccptools.structs import *
+from ccpstencil.structs import *
+
 
 class EmbedExtension(Extension):
     tags = {'embed'}
@@ -13,6 +13,10 @@ class EmbedExtension(Extension):
     def __init__(self, environment):
         super().__init__(environment)
         environment.extend(stencil_renderer=None)
+
+    @property
+    def renderer(self) -> IRenderer:
+        return self.environment.stencil_renderer  # noqa
 
     def parse(self, parser):
         lineno = next(parser.stream).lineno
@@ -29,17 +33,12 @@ class EmbedExtension(Extension):
 
     def _render_embed(self, file_path, source_file: Optional[str] = None, indent: int = 0,
                       alviss: bool = False, env: bool = False,  caller=None, **kwargs):
-        # file_path = os.path.abspath(file_path)
-
-        c = caller()
-
-        caller_source = c.strip()
 
         # Check if file_path is a variable in the context
         if hasattr(file_path, '__call__'):
             file_path = file_path()
 
-        content = self.environment.stencil_renderer.get_embed(file_path, alviss=alviss, env=env)
+        content = self.renderer.get_embed(file_path, alviss=alviss, env=env)
 
         # Detect the current line's indentation level
         if indent:
