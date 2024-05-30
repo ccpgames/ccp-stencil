@@ -1,6 +1,8 @@
 __all__ = [
     'StencilRunner',
 ]
+import os
+import sys
 from ccptools.structs import *
 from ccpstencil.stencils import *
 import logging
@@ -20,7 +22,15 @@ class StencilRunner:
         self.output: Optional[str] = None
         self.no_overwrite: bool = False
 
+    def _make_cwd_importable(self):
+        cwd = os.getcwd()
+        if self.verbose:
+            log.debug(f'os.getcwd()={cwd}')
+        if cwd not in sys.path:
+            sys.path.append(cwd)
+
     def run(self):
+        self._make_cwd_importable()
         rnd = self.get_renderer()
         rnd.template = self.get_template()
         rnd.context = self.get_context()
