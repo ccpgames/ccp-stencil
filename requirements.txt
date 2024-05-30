@@ -1,3 +1,3 @@
 ccptools >=1.1, <2
-alviss >= 3.2, <4
+alviss >= 3.3, <4
 jinja2 >= 3.1, <4
