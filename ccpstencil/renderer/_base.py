@@ -35,6 +35,7 @@ class _BaseRenderer(IRenderer, abc.ABC):
         self._load_search_paths()
         self._env: jinja2.Environment = self._make_environment()
         self._load_filters()
+        self._output_file_name: Optional[str] = None
 
     def _make_environment(self) -> jinja2.Environment:
         env = jinja2.Environment(
@@ -184,3 +185,19 @@ class _BaseRenderer(IRenderer, abc.ABC):
         else:
             with open(abs_file_path, 'r', newline=None) as fin:
                 return fin.read()
+
+    @property
+    def output_file_name(self) -> Optional[str]:
+        if self._output_file_name:
+            return self._output_file_name
+
+        if self._template:
+            from ccpstencil.template import FileTemplate
+            if isinstance(self._template, FileTemplate):
+                return self._template.get_file_path().name
+
+        return None
+
+    @output_file_name.setter
+    def output_file_name(self, value: str):
+        self._output_file_name = value or None

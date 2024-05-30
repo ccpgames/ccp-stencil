@@ -12,7 +12,7 @@ def main():
 
     # rnd = stencils.StringRenderer(ctx, tpl)
     # rnd = stencils.StdOutRenderer(ctx, tpl)
-    rnd = stencils.FileRenderer('./build/something/_sandbox_output.txt', ctx, tpl, overwrite=True)
+    rnd = stencils.FileRenderer('./build/something/', ctx, tpl, overwrite=True)
     print(rnd.render())
 
 

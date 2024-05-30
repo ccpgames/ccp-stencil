@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.6.0] - 2024-05-30
+
+## Added
+
+- A new `{% setfilename %}` tag where you can set the desired filename of the 
+  rendered file dynamically in the tags body with normal template code e.g. 
+  using the template context
+
+## Changed
+
+- The `FileRenderer` can now define a directory as output location which will 
+  result in the rendered file to be the same as the input template file name 
+  (if any) unless set explicitly via the `{% setfilename %}` tag.
+
+
+## [0.5.1] - 2024-05-30
+
+## Fixed
+
+- FileRenderer was hitting an infinite loop
+- Added dynamic path extension to include cwd to enable `${__PY__:...}` 
+  injecting from project roots
+
+
 ## [0.5.0] - 2024-05-30
 
 ## Changed
