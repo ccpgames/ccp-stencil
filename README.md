@@ -17,13 +17,13 @@ should work and was written before any actual code or functionality.
 - [x] kwargs context (via code)
 - [x] Dict context (via code)
 - [x] Alviss file context (json/yaml + inheritance)
-- [ ] Args context (from commandline)
+- [x] Args context (from commandline)
 
 ## Template
 
 - [x] String template (via code)
 - [x] File template
-- [ ] Args template (from commandline)
+- [x] Args template (from commandline)
 - [ ] Directory template
 
 ## Renderer
@@ -35,11 +35,13 @@ should work and was written before any actual code or functionality.
 
 ## Other features...?
 
-- ENV var rendering (can be done via ${__ENV__:FOO} in Alviss input)?
-- Meta-data header in files for Directory rendering that controls file names and/or if they should be rendered or not
-- Meta-data file for directories in Directory rendering that control the directory name?
-- Proper Jinja2 Environment Template Loader to enable Jinja's include/extend stuff?
-- Custom macros/scripts/filters?
+- [x] ENV var rendering (can be done via ${__ENV__:FOO} in Alviss input)?
+- [ ] Meta-data header in files for Directory rendering that controls file names and/or if they should be rendered or not
+  - [x] Skip-if tag for skipping file rendering
+  - [ ] Some meta-tag that can control the output name of a file via the `FileRenderer`
+- [ ] Meta-data file for directories in Directory rendering that control the directory name?
+- [x] Proper Jinja2 Environment Template Loader to enable Jinja's include/extend stuff?
+- [x] Custom macros/scripts/filters?
 
 ## Use Cases
 
