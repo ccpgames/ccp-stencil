@@ -28,5 +28,4 @@ class AlvissContext(IContext):
         self._data.update(**iters.nest_dict(list(key_tuple), value))  # noqa
 
     def as_dict(self) -> Dict:
-        log.debug(f'as_dict() YAML dump:\n{self._data.as_yaml(unmaksed=True)}')
         return self._data.as_dict(unmaksed=True)

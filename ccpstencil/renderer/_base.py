@@ -132,7 +132,7 @@ class _BaseRenderer(IRenderer, abc.ABC):
             rendered_string = self._render_as_string()
             return self._output_rendered_results(rendered_string)
         except CancelRendering:
-            log.info(f'Rendering cancelled by skip_if tag')
+            log.debug(f'Rendering cancelled by skip_if tag')
             return None
 
     @abc.abstractmethod
