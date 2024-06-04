@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2024-06-04
+
+## Changed
+
+- `FileRenderer` (and thus `DirectoryRenderer`) now use `\n` line endings in the 
+  resulting file. This should probably just be an option with the default being
+  to preserve the line ending format of the template file, but since this is 
+  being used to render files that should run on Linux and apparently incorrect 
+  line endings mess up the shebang reading and sh*t like that so I'm applying 
+  this "sh*t fix" for now. 
+
 ## [0.7.0] - 2024-05-30
 
 ## Added

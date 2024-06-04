@@ -13,8 +13,10 @@ class FileRenderer(StringRenderer):
     def __init__(self, output_path: Union[str, Path],
                  context: Optional[IContext] = None, template: Optional[ITemplate] = None,
                  overwrite: bool = True,
+                 new_line_char: str = '\n',
                  **kwargs):
         self._overwrite = overwrite
+        self._new_line_char = new_line_char
         super().__init__(context, template, **kwargs)
         is_dir = False
         log.debug(f'{output_path=}')
@@ -46,7 +48,7 @@ class FileRenderer(StringRenderer):
                                         f' disabled: {fout_path.absolute()}')
         fout_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(fout_path, 'w') as fout:
+        with open(fout_path, 'w', newline=self._new_line_char) as fout:
             fout.write(results)
         return str(fout_path.absolute())
 
